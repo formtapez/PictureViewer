@@ -24,7 +24,7 @@ namespace PictureViewer
             else return false;
         }
 
-        private void OpenFile(string filename)
+        private void OpenFile(string filepath)
         {
             // Delete old stuff
             filenames.Clear();
@@ -33,20 +33,22 @@ namespace PictureViewer
             actfile = 0;
 
             // get list of supported files from same directory of chosen file
-            var fileArray = Directory.EnumerateFiles(Path.GetDirectoryName(filename)).Where(s => s.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                                                                                                s.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
-                                                                                                s.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
-                                                                                                s.EndsWith(".gif", StringComparison.OrdinalIgnoreCase) ||
-                                                                                                s.EndsWith(".tif", StringComparison.OrdinalIgnoreCase) ||
-                                                                                                s.EndsWith(".tiff", StringComparison.OrdinalIgnoreCase) ||
-                                                                                                s.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase));
+            var fileArray = Directory.EnumerateFiles(Path.GetDirectoryName(filepath)).OrderBy(filename => filename).Where(s => 
+                            s.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                            s.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                            s.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                            s.EndsWith(".gif", StringComparison.OrdinalIgnoreCase) ||
+                            s.EndsWith(".tif", StringComparison.OrdinalIgnoreCase) ||
+                            s.EndsWith(".tiff", StringComparison.OrdinalIgnoreCase) ||
+                            s.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase));
+
             // fill filenames array, save position of selected file
             numfiles = 0;
             foreach (string temp in fileArray)
             {
                 filenames.Add(temp);
                 picdata.Add(null);
-                if (temp == filename) actfile = numfiles;
+                if (temp == filepath) actfile = numfiles;
                 numfiles++;
             }
 
