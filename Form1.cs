@@ -21,6 +21,7 @@ namespace PictureViewer
             // show picture in first argument - else show openfile dialog
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length == 2) OpenFile(args[1]);
+            else if (args.Length == 3) OpenFile(args[2]);
 
             // quit when no file was selected
             else if (!OpenDialog()) Application.Exit();
